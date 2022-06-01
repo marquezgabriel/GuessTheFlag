@@ -8,27 +8,70 @@
 import SwiftUI
 
 struct ContentView: View {
-    var body: some View {
-        ZStack {
-            VStack(spacing: 0) {
-                Color.blue
-                Color.indigo
-            }
+    @State private var showingScore = false
+    @State private var scoreTitle = ""
+    
+    @State private var countries = ["Estonia", "France", "Germany", "Ireland", "Italy", "Nigeria", "Poland", "Russia", "Spain", "UK", "US"].shuffled()
+    @State private var correctAnswer = Int.random(in: 0...2)
 
-            Text("Your content")
-                // .foregroundStyle
-                .foregroundColor(.secondary)
-                .padding(50)
-                .background(.ultraThinMaterial)
+    func flagTapped(_ number: Int) {
+        if number == correctAnswer {
+            scoreTitle = "Correct"
+        } else {
+            scoreTitle = "Wrong"
         }
-        .ignoresSafeArea()
+
+        showingScore = true
     }
+    
+    func askQuestion() {
+        countries.shuffle()
+        correctAnswer = Int.random(in: 0...2)
+    }
+    
+    var body: some View {
+        ZStack{
+            // Solid background example
+            // Color.indigo
+            // Gradient background
+            LinearGradient(gradient: Gradient(colors: [.blue, .black]), startPoint: .top, endPoint: .bottom)
+                .ignoresSafeArea()
+            
+            VStack (spacing: 30) {
+                VStack {
+                    Text("Tap the flag of")
+                        .font(.subheadline.weight(.heavy))
+                        .foregroundColor(.white)
+                    Text(countries[correctAnswer])
+                        .font(.largeTitle.weight(.semibold))
+                        .foregroundColor(.white)
+                }
+                
+                ForEach(0..<3) { number in
+                    Button {
+                       // flag was tapped
+                        flagTapped(number)
+                    } label: {
+                        Image(countries[number])
+                            .renderingMode(.original)
+                            .clipShape(Capsule())
+                            .shadow(radius: 5)
+                    }
+                }
+            }
+            .alert(scoreTitle, isPresented: $showingScore) {
+                Button("Continue", action: askQuestion)
+            } message: {
+                Text("Your score is ???")
+            }
+        }
+    } 
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
-        .preferredColorScheme(.dark)
-        .previewDevice("iPhone 11 Pro")
+            .preferredColorScheme(.dark)
+            .previewDevice("iPhone 11 Pro")
     }
 }
