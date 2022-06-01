@@ -39,18 +39,18 @@ struct ContentView: View {
                 .init(color: Color(red: 0.76, green: 0.15, blue: 0.26), location: 0.3),
             ], center: .top, startRadius: 200, endRadius: 400)
                 .ignoresSafeArea()
-                .padding()
             
             VStack {
+                Spacer()
                 Text("Guess the Flag")
                     .font(.largeTitle.weight(.bold))
                     .foregroundColor(.white)
-                    .padding()
-                    .padding()
+                Spacer()
+                Spacer()
                 Text("Score: ???")
                     .foregroundColor(.white)
                     .font(.title.bold())
-                    .padding()
+                Spacer()
                 VStack (spacing: 15) {
                     VStack {
                         Text("Tap the flag of")
@@ -79,11 +79,6 @@ struct ContentView: View {
                 }
             }
             .padding()
-            
-            
-            
-            
-            
             .alert(scoreTitle, isPresented: $showingScore) {
                 Button("Continue", action: askQuestion)
             } message: {
