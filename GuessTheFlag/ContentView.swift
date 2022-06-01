@@ -13,27 +13,9 @@ struct ContentView: View {
     
     @State private var countries = ["Estonia", "France", "Germany", "Ireland", "Italy", "Nigeria", "Poland", "Russia", "Spain", "UK", "US"].shuffled()
     @State private var correctAnswer = Int.random(in: 0...2)
-
-    func flagTapped(_ number: Int) {
-        if number == correctAnswer {
-            scoreTitle = "Correct"
-        } else {
-            scoreTitle = "Wrong"
-        }
-
-        showingScore = true
-    }
-    
-    func askQuestion() {
-        countries.shuffle()
-        correctAnswer = Int.random(in: 0...2)
-    }
     
     var body: some View {
         ZStack{
-            // Solid background example
-            // Color.indigo
-            // Gradient background
             RadialGradient(stops: [
                 .init(color: Color(red: 0.1, green: 0.2, blue: 0.45), location: 0.3),
                 .init(color: Color(red: 0.76, green: 0.15, blue: 0.26), location: 0.3),
@@ -42,15 +24,18 @@ struct ContentView: View {
             
             VStack {
                 Spacer()
+                
                 Text("Guess the Flag")
                     .font(.largeTitle.weight(.bold))
                     .foregroundColor(.white)
+                
                 Spacer()
                 Spacer()
                 Text("Score: ???")
                     .foregroundColor(.white)
                     .font(.title.bold())
                 Spacer()
+                
                 VStack (spacing: 15) {
                     VStack {
                         Text("Tap the flag of")
@@ -85,7 +70,22 @@ struct ContentView: View {
                 Text("Your score is ???")
             }
         }
-    } 
+    }
+    
+    func flagTapped(_ number: Int) {
+        if number == correctAnswer {
+            scoreTitle = "Correct"
+        } else {
+            scoreTitle = "Wrong"
+        }
+
+        showingScore = true
+    }
+    
+    func askQuestion() {
+        countries.shuffle()
+        correctAnswer = Int.random(in: 0...2)
+    }
 }
 
 struct ContentView_Previews: PreviewProvider {
