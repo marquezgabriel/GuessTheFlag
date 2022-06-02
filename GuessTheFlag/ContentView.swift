@@ -48,8 +48,8 @@ struct ContentView: View {
                         } label: {
                             Image(countries[number])
                                 .renderingMode(.original)
-                                .clipShape(Capsule())
-                                //.clipShape(Rectangle())
+                                //.clipShape(Capsule())
+                                .clipShape(Rectangle())
                                 .shadow(radius: 5)
                         }
                     }
@@ -82,7 +82,7 @@ struct ContentView: View {
             scoreTitle = "Correct"
             userScore += 10
         } else {
-            scoreTitle = "Wrong! That's the flag of "
+            scoreTitle = "Wrong! That's the flag of \(countries[number])"
             userScore -= 10
         }
 
