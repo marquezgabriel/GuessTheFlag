@@ -3,7 +3,7 @@
 //  GuessTheFlag
 //
 //  Created by Gabriel Marquez on 2022-05-31.
-//
+//  Modified by Gabriel Marquez on 2022-06-04.
 
 import SwiftUI
 
@@ -51,11 +51,7 @@ struct ContentView: View {
                            // flag was tapped
                             flagTapped(number)
                         } label: {
-                            Image(countries[number])
-                                .renderingMode(.original)
-                                //.clipShape(Capsule())
-                                .clipShape(Rectangle())
-                                .shadow(radius: 5)
+                            FlagImage(name: countries[number])
                         }
                     }
                 }
@@ -133,7 +129,7 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
-            .preferredColorScheme(.light)
+            .preferredColorScheme(.dark)
             .previewDevice("iPhone 11 Pro")
     }
 }
