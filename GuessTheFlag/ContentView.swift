@@ -55,13 +55,13 @@ struct ContentView: View {
                         } label: {
                             Image(countries[number])
                                 .renderingMode(.original)
-                                .clipShape(Capsule())
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
                                 .shadow(radius: 5)
                                 .rotation3DEffect(.degrees(selectedFlag == number ? 360 : 0), axis: (x: 0, y: 1, z: 0))
                                 .opacity(selectedFlag == -1 || selectedFlag == number ? 1 : 0.25)
-                                .scaleEffect(selectedFlag == -1 || selectedFlag == number ? 1 : 0.25)
-                                .saturation(selectedFlag == -1 || selectedFlag == number ? 1 : 0)
-//                                .blur(radius: selectedFlag == -1 || selectedFlag == number ? 0 : 3)
+//                                .scaleEffect(selectedFlag == -1 || selectedFlag == number ? 1 : 0.25)
+//                                .saturation(selectedFlag == -1 || selectedFlag == number ? 1 : 0)
+                                .blur(radius: selectedFlag == -1 || selectedFlag == number ? 0 : 3)
                                 .animation(.default, value: selectedFlag)
                         }
                     }
