@@ -3,7 +3,7 @@
 //  GuessTheFlag
 //
 //  Created by Gabriel Marquez on 2022-05-31.
-//  Modified by Gabriel Marquez on 2022-06-04.
+//  Modified by Gabriel Marquez on 2022-06-11.
 
 import SwiftUI
 
@@ -20,6 +20,8 @@ struct ContentView: View {
     
     @State private var questionCounter = 1
     @State private var showingResults = false
+    
+    @State private var selectedFlag = -1
     
     var body: some View {
         ZStack {
@@ -51,23 +53,32 @@ struct ContentView: View {
                            // flag was tapped
                             flagTapped(number)
                         } label: {
-                            FlagImage(name: countries[number])
+                            Image(countries[number])
+                                .renderingMode(.original)
+                                .clipShape(Capsule())
+                                .shadow(radius: 5)
+                                .rotation3DEffect(.degrees(selectedFlag == number ? 360 : 0), axis: (x: 0, y: 1, z: 0))
+                                .opacity(selectedFlag == -1 || selectedFlag == number ? 1 : 0.25)
+                                .scaleEffect(selectedFlag == -1 || selectedFlag == number ? 1 : 0.25)
+                                .saturation(selectedFlag == -1 || selectedFlag == number ? 1 : 0)
+//                                .blur(radius: selectedFlag == -1 || selectedFlag == number ? 0 : 3)
+                                .animation(.default, value: selectedFlag)
                         }
                     }
                 }
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 20)
-                    .background(.regularMaterial)
-                    .clipShape(RoundedRectangle(cornerRadius: 20))
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 20)
+                .background(.regularMaterial)
+                .clipShape(RoundedRectangle(cornerRadius: 20))
                     
-                    Spacer()
-                    Spacer()
+                Spacer()
+                Spacer()
 
-                    Text("Score: \(userScore)")
-                        .foregroundColor(.white)
-                        .font(.title.bold())
+                Text("Score: \(userScore)")
+                    .foregroundColor(.white)
+                    .font(.title.bold())
 
-                    Spacer()
+                Spacer()
                 }
                 .padding()
             }
@@ -88,6 +99,8 @@ struct ContentView: View {
         let needsThe = ["UK", "US"]
         let theirAnswer = countries[number]
         
+        selectedFlag = number
+        
         if number == correctAnswer {
             scoreTitle = "Correct!"
             userScore += 10
@@ -104,7 +117,7 @@ struct ContentView: View {
         
         showingScore = true
         
-        if questionCounter == 4 {
+        if questionCounter == 8 {
             showingResults = true
         } else {
             showingScore = true
@@ -116,6 +129,7 @@ struct ContentView: View {
         countries.shuffle()
         correctAnswer = Int.random(in: 0...2)
         questionCounter += 1
+        selectedFlag = -1
     }
     
     func newGame() {
